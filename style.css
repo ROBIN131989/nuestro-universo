@@ -1,0 +1,93 @@
+:root{
+  --noche:#0e1233;
+  --violeta:#1c1f55;
+  --oro:#f4d27a;
+  --crema:#fdf3dc;
+  --rosa:#e0607e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at top,var(--violeta),var(--noche) 70%) fixed;
+  color:var(--crema);
+  font-family:"Nunito",system-ui,sans-serif;
+  font-size:1.05rem;
+  line-height:1.6;
+  text-align:center;
+}
+#estrellas{position:fixed;inset:0;z-index:-1}
+.pantalla{
+  min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1rem;
+  padding:4rem 1.25rem;
+}
+h2,.frase{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-style:italic;font-weight:500;
+  line-height:1.2;margin:0;
+}
+h2{font-size:clamp(1.9rem,6vw,3rem);color:var(--oro);max-width:22ch}
+.frase{font-size:clamp(1.4rem,4.5vw,2.2rem);max-width:26ch}
+.final{font-size:clamp(2rem,7vw,3.4rem);margin-top:1.5rem}
+p{margin:0;max-width:34rem}
+.hora b{color:var(--oro);font-size:1.3em}
+
+/* La portada: una sola aparición ordenada */
+#portada .tarde{opacity:0;animation:aparece 2s 2.5s forwards}
+#portada .boton{opacity:0;animation:aparece 2s 5s forwards}
+@keyframes aparece{to{opacity:1}}
+
+.boton,.sobre{
+  font:inherit;font-weight:600;
+  background:var(--oro);color:var(--noche);
+  border:0;border-radius:999px;
+  padding:.9rem 1.8rem;margin-top:1rem;
+  cursor:pointer;
+}
+.boton:focus-visible,.sobre:focus-visible,#btn-musica:focus-visible{outline:3px solid var(--crema);outline-offset:3px}
+
+/* FOTOS: centradas, completas (sin recortar) y con descripción */
+figure{margin:1.5rem 0 0;width:100%;max-width:26rem}
+.marco{
+  display:flex;align-items:center;justify-content:center;
+  min-height:14rem;
+  padding:.5rem;
+  background:rgba(253,243,220,.06);
+  border:1px solid rgba(244,210,122,.5);
+  border-radius:.5rem;
+}
+.marco::before{content:"Tu foto aquí";position:absolute;opacity:.4}
+.marco{position:relative}
+.marco img{
+  position:relative;
+  display:block;
+  max-width:100%;max-height:70svh;
+  width:auto;height:auto;
+  object-fit:contain;
+  border-radius:.25rem;
+}
+figcaption{margin-top:.75rem;font-size:.95rem;opacity:.9}
+
+/* CARTA */
+.carta{
+  max-width:32rem;text-align:left;
+  background:var(--crema);color:var(--noche);
+  padding:1.75rem;border-radius:.5rem;
+  display:flex;flex-direction:column;gap:1rem;
+}
+.carta[hidden]{display:none}
+
+#btn-musica{
+  position:fixed;top:max(.75rem,env(safe-area-inset-top));right:.75rem;z-index:5;
+  width:2.6rem;height:2.6rem;border-radius:50%;
+  border:1px solid var(--oro);background:rgba(14,18,51,.7);color:var(--oro);
+  font-size:1.2rem;cursor:pointer;
+}
+#btn-musica[hidden]{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #portada .tarde,#portada .boton{animation:none;opacity:1}
+}

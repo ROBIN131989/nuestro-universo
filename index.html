@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nuestro pequeño universo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="estrellas"></canvas>
+<audio id="musica" src="musica/cancion.mp3" loop></audio>
+<button id="btn-musica" aria-label="Activar o pausar música" hidden>♪</button>
+
+<!-- PORTADA -->
+<section class="pantalla" id="portada">
+  <p class="frase">“Todas las personas mayores fueron niños alguna vez...”</p>
+  <p class="frase tarde">Pero esta historia es solamente nuestra.</p>
+  <button id="entrar" class="boton">✨ Entrar a nuestro universo</button>
+</section>
+
+<main id="contenido" hidden>
+
+  <!-- 1. EL COMIENZO -->
+  <section class="pantalla">
+    <h2>Henry, todo empezó un 20 de julio</h2>
+    <p class="hora"><b>7:44 p. m.</b> te escribí.</p>
+    <p class="hora"><b>10:42 p. m.</b> me respondiste.</p>
+    <p>Y desde ese día no hemos dejado de hablar.</p>
+  </section>
+
+  <!-- 2. LAS FLORES AMARILLAS -->
+  <section class="pantalla">
+    <h2>Las flores amarillas</h2>
+    <figure>
+      <div class="marco"><img src="img/flores.jpg" alt="Flores amarillas" onerror="this.style.display='none'"></div>
+      <figcaption>CAMBIA ESTE TEXTO: el 21 de septiembre llegó un repartidor con flores amarillas, chocolates y una nota. Fue una sorpresa tuya y lloré de felicidad.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 3. LOS DIBUJOS DE HENRY -->
+  <section class="pantalla">
+    <h2>Tus dibujos</h2>
+    <p>Un planeta hecho por ti.</p>
+    <figure>
+      <div class="marco"><img src="img/dibujo1.jpg" alt="Dibujo 1" onerror="this.style.display='none'"></div>
+      <figcaption>CAMBIA ESTE TEXTO: descripción del dibujo.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="img/dibujo2.jpg" alt="Dibujo 2" onerror="this.style.display='none'"></div>
+      <figcaption>CAMBIA ESTE TEXTO: descripción del dibujo.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 4. LAS ESTRELLAS (RECUERDOS) -->
+  <section class="pantalla">
+    <h2>Nuestras estrellas</h2>
+    <p>Cada foto guarda un recuerdo.</p>
+    <figure>
+      <div class="marco"><img src="img/recuerdo1.jpg" alt="Recuerdo 1" onerror="this.style.display='none'"></div>
+      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="img/recuerdo2.jpg" alt="Recuerdo 2" onerror="this.style.display='none'"></div>
+      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="img/recuerdo3.jpg" alt="Recuerdo 3" onerror="this.style.display='none'"></div>
+      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="img/recuerdo4.jpg" alt="Recuerdo 4" onerror="this.style.display='none'"></div>
+      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 5. LA CARTA -->
+  <section class="pantalla">
+    <h2>Una carta desde mi planeta</h2>
+    <button id="sobre" class="sobre" aria-expanded="false">💌 Toca para abrir</button>
+    <div id="carta" class="carta" hidden>
+      <p>Henry:</p>
+      <p>ESCRIBE AQUÍ TU CARTA. Cada salto de línea o párrafo nuevo va dentro de su propio &lt;p&gt;.</p>
+      <p>Con cariño,<br>TU NOMBRE</p>
+    </div>
+  </section>
+
+  <!-- 6. FINAL -->
+  <section class="pantalla">
+    <p class="frase">Quizás existan millones de planetas...</p>
+    <p class="frase">millones de estrellas...</p>
+    <p class="frase">y millones de historias...</p>
+    <h2 class="final">Pero yo elegiría la nuestra una y otra vez.</h2>
+    <p>Te amo, Henry. ❤️</p>
+  </section>
+
+</main>
+<script src="script.js"></script>
+</body>
+</html>
