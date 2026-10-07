@@ -125,3 +125,16 @@ figcaption{margin-top:.75rem;font-size:.95rem;opacity:.9}
 .rosa:focus-visible{outline:3px solid var(--crema);outline-offset:6px;border-radius:50%}
 #frase-rosa{min-height:7rem}
 .autor{opacity:.75;font-size:.95rem}
+/* Pistas para quien ve la página */
+.pista{font-size:.95rem;opacity:.8}
+#portada .pista{opacity:0;animation:aparece 2s 5s forwards}
+main .pantalla::after{
+  content:"Desliza hacia abajo ↓";
+  margin-top:2rem;
+  font-size:.9rem;
+  opacity:.55;
+}
+main .pantalla:last-child::after{content:none}
+@media (prefers-reduced-motion:reduce){
+  #portada .pista{animation:none;opacity:.8}
+}
