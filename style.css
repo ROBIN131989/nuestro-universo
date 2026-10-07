@@ -58,8 +58,6 @@ figure{margin:1.5rem 0 0;width:100%;max-width:26rem}
   border:1px solid rgba(244,210,122,.5);
   border-radius:.5rem;
 }
-.marco::before{content:"Tu foto aquí";position:absolute;opacity:.4}
-.marco{position:relative}
 .marco img{
   position:relative;
   display:block;
@@ -69,6 +67,27 @@ figure{margin:1.5rem 0 0;width:100%;max-width:26rem}
   border-radius:.25rem;
 }
 figcaption{margin-top:.75rem;font-size:.95rem;opacity:.9}
+
+/* CARRETE: fotos completas, sin recortar, se desliza de lado */
+.carrete{
+  display:flex;gap:.75rem;
+  width:calc(100% + 2.5rem);
+  padding:1rem 1.25rem;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.carrete img{
+  flex:none;
+  height:min(62svh,32rem);
+  width:auto;max-width:85vw;
+  object-fit:contain;
+  scroll-snap-align:center;
+  padding:.35rem;
+  background:rgba(253,243,220,.06);
+  border:1px solid rgba(244,210,122,.5);
+  border-radius:.4rem;
+}
 
 /* CARTA */
 .carta{
