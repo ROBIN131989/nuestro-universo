@@ -73,3 +73,18 @@ document.querySelectorAll("img[data-foto]").forEach((img) => {
   img.addEventListener("error", probar);
   probar();
 });
+// La rosa: cada vez que la tocas aparece una frase distinta
+const frasesRosa = [
+  "“Lo esencial es invisible a los ojos.” — El Principito",
+  "“Es el tiempo que pasaste con tu rosa lo que la hace tan importante.” — El Principito",
+  "“Eres responsable para siempre de lo que has domesticado.” — El Principito",
+  "“Cuando mires el cielo de noche, será como si todas las estrellas rieran.” — El Principito",
+  "Entre millones de estrellas, yo te elijo a ti.",
+];
+let numeroFrase = 0;
+const rosa = document.getElementById("rosa");
+const textoRosa = document.getElementById("frase-rosa");
+rosa.addEventListener("click", () => {
+  textoRosa.textContent = frasesRosa[numeroFrase % frasesRosa.length];
+  numeroFrase++;
+});
