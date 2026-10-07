@@ -56,3 +56,15 @@ sobre.addEventListener("click", () => {
   sobre.textContent = carta.hidden ? "💌 Toca para abrir" : "Cerrar carta";
   if (!carta.hidden) carta.scrollIntoView({ behavior: "smooth", block: "center" });
 });
+
+// Fotos: busca cada archivo en img/ sin importar si es .jpg, .jpeg, .png o .webp
+const EXTENSIONES = ["jpg", "jpeg", "png", "JPG", "JPEG", "PNG", "webp"];
+document.querySelectorAll("img[data-foto]").forEach((img) => {
+  let i = 0;
+  const probar = () => {
+    if (i >= EXTENSIONES.length) { img.style.display = "none"; return; }
+    img.src = "img/" + encodeURIComponent(img.dataset.foto) + "." + EXTENSIONES[i++];
+  };
+  img.addEventListener("error", probar);
+  probar();
+});
