@@ -57,13 +57,18 @@ sobre.addEventListener("click", () => {
   if (!carta.hidden) carta.scrollIntoView({ behavior: "smooth", block: "center" });
 });
 
-// Fotos: busca cada archivo en img/ sin importar si es .jpg, .jpeg, .png o .webp
-const EXTENSIONES = ["jpg", "jpeg", "png", "JPG", "JPEG", "PNG", "webp"];
+// Fotos: están en la carpeta IMG y todas son .jpeg
+const EXTENSIONES = ["jpeg", "JPEG", "jpg", "JPG", "png", "PNG", "webp"];
 document.querySelectorAll("img[data-foto]").forEach((img) => {
   let i = 0;
   const probar = () => {
-    if (i >= EXTENSIONES.length) { img.style.display = "none"; return; }
-    img.src = "img/" + encodeURIComponent(img.dataset.foto) + "." + EXTENSIONES[i++];
+    if (i >= EXTENSIONES.length) {
+      const aviso = document.createElement("small");
+      aviso.textContent = "No encontré la foto: IMG/" + img.dataset.foto;
+      img.replaceWith(aviso);
+      return;
+    }
+    img.src = "IMG/" + encodeURIComponent(img.dataset.foto) + "." + EXTENSIONES[i++];
   };
   img.addEventListener("error", probar);
   probar();
