@@ -11,11 +11,12 @@
 </head>
 <body>
 <canvas id="estrellas"></canvas>
-<audio id="musica" src="musica/cancion.mp3" loop></audio>
+<audio id="musica" src="musica/PEDACITO%20DE%20MI%20CORAZON.mp3" loop></audio>
 <button id="btn-musica" aria-label="Activar o pausar música" hidden>♪</button>
 
 <!-- PORTADA -->
 <section class="pantalla" id="portada">
+  <div class="planeta" aria-hidden="true"><span>🌹</span></div>
   <p class="frase">“Todas las personas mayores fueron niños alguna vez...”</p>
   <p class="frase tarde">Pero esta historia es solamente nuestra.</p>
   <button id="entrar" class="boton">✨ Entrar a nuestro universo</button>
@@ -34,10 +35,10 @@
   <!-- 2. LOS DIBUJOS DE HENRY -->
   <section class="pantalla">
     <h2>Tus dibujos</h2>
-    <p>Recuerdo ese dia Domingo viendote dibujar y ver los resultasdos, fue increible ver lo talentoso que eres, tus dibujos increibles, eres maravilloso amor, ese dia me encanto estar contigo verte dibujando.</p>
+    <p>Recuerdo ese día domingo viéndote dibujar y ver los resultados. Fue increíble ver lo talentoso que eres: tus dibujos son increíbles, eres maravilloso, amor. Ese día me encantó estar contigo, verte dibujar.</p>
     <figure>
       <div class="marco"><img data-foto="DIBUJO 1" alt="Dibujo de Henry"></div>
-      <figcaption>¡¡Que increible!! </figcaption>
+      <figcaption>¡¡Qué increíble!!</figcaption>
     </figure>
     <figure>
       <div class="marco"><img data-foto="DIBUJO 2" alt="Dibujo de Henry"></div>
@@ -47,7 +48,7 @@
 
   <!-- 3. EL CARRETE DE HENRY (para cambiar el orden, mueve las líneas) -->
   <section class="pantalla">
-    <h2>Aca unas fotos de MI PERSONA FAVORITA</h2>
+    <h2>Acá unas fotos de MI PERSONA FAVORITA</h2>
     <p>Desliza para ver todas las fotos.</p>
     <div class="carrete">
       <img data-foto="H1" alt="Henry" loading="lazy">
@@ -74,30 +75,62 @@
     <p>El 21 de septiembre llegó un repartidor y yo no sabía nada. Eran flores amarillas, unos chocolates y una nota tuya. Lloré de felicidad. Fue el mejor regalo que me has dado, Henry.</p>
     <figure>
       <div class="marco"><img data-foto="FLORES" alt="Las flores amarillas"></div>
-      <figcaption>Las flores que me mandaste, me hiciste tan feliz, el momento, el dia, todo, que ese dia termine llorando, es una expericia que nunca habia vivido ye stabas ahi haciendolo por primera vez .</figcaption>
+      <figcaption>Las flores que me mandaste. Me hiciste tan feliz: el momento, el día, todo. Ese día terminé llorando. Es una experiencia que nunca había vivido, y tú estabas ahí, haciéndolo por primera vez.</figcaption>
     </figure>
     <figure>
       <div class="marco"><img data-foto="YO FELIZ" alt="Yo con las flores"></div>
-      <figcaption>Esa noche fue increible, y todo gracias a ti..</figcaption>
+      <figcaption>Esa noche fue increíble, y todo gracias a ti.</figcaption>
     </figure>
     <figure>
       <div class="marco"><img data-foto="MENSAJE" alt="La nota que venía con las flores"></div>
-      <figcaption>Tu mensaje tan encatador, eres mi principito</figcaption>
+      <figcaption>Tu mensaje tan encantador. Eres mi principito.</figcaption>
     </figure>
   </section>
 
-  <!-- 5. LA CARTA -->
+  <!-- 5. LA ROSA (toca para ver frases) -->
+  <section class="pantalla">
+    <h2>Nuestro pequeño planeta</h2>
+    <p>Toca la rosa.</p>
+    <button id="rosa" class="rosa" aria-label="Tocar la rosa">🌹</button>
+    <p id="frase-rosa" class="frase" aria-live="polite"></p>
+  </section>
+
+  <!-- 6. EL ZORRO -->
+  <section class="pantalla">
+    <h2>El zorro tenía razón</h2>
+    <p class="frase">“Si me domesticas, serás para mí único en el mundo.”</p>
+    <p class="autor">El Principito</p>
+    <p>Y tú lo eres, Henry.</p>
+    <p class="frase">Cerca o lejos, solo tú tienes mi corazón, mis pensamientos y mi amor.</p>
+  </section>
+
+  <!-- 7. LOS 44 ATARDECERES -->
+  <section class="pantalla">
+    <h2>Cuarenta y cuatro atardeceres</h2>
+    <p class="frase">“Cuando uno está muy triste, le gustan las puestas de sol.”</p>
+    <p class="autor">El Principito</p>
+    <p>Sé que a veces la distancia pesa, y que los problemas nos llegan todos los días. Pero somos fuertes. Lo que sentimos es más grande que cualquier problema, y algún día vamos a estar juntos para enfrentarlos de la mano y superarlos. Mientras tanto, cada atardecer es uno menos para vernos. 🌅</p>
+  </section>
+
+  <!-- 8. LA CARTA -->
   <section class="pantalla">
     <h2>Una carta desde mi planeta</h2>
     <button id="sobre" class="sobre" aria-expanded="false">💌 Toca para abrir</button>
     <div id="carta" class="carta" hidden>
       <p>Henry, mi amor:</p>
-      <p>Cada dia que pasa te amo cada vez mas, mi amor por ti es infinito, me encantas y si hay froma de decirtelo diario lo hare todos los dias para demostrate y recordarte lo mucho que te amo y te quiero, no solo para un rato, para toda mi vida. &lt;p&gt;.</p>
-      <p>Con cariño,<br>Marc, la persona que mas te ama.</p>
+      <p>Cada día que pasa te amo cada vez más. Mi amor por ti es infinito, me encantas, y si hay forma de decírtelo a diario, lo haré todos los días para demostrártelo y recordarte lo mucho que te amo y te quiero, no solo por un rato, sino para toda mi vida.</p>
+      <p>Con cariño,<br>Marc, la persona que más te ama.</p>
     </div>
   </section>
 
-  <!-- 6. FINAL -->
+  <!-- 9. FRASES PARA TI -->
+  <section class="pantalla">
+    <p class="frase">Eres la forma más bonita que ha tenido la vida de enseñarme que vale la pena arriesgarme a amar.</p>
+    <p class="frase">“Te quiero así como eres, con todo lo bueno que no ves, con todo lo malo que dices tener.”</p>
+    <p class="autor">Mario Benedetti</p>
+  </section>
+
+  <!-- 10. FINAL -->
   <section class="pantalla">
     <p class="frase">Quizás existan millones de planetas...</p>
     <p class="frase">millones de estrellas...</p>
