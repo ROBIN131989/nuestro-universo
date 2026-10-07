@@ -31,48 +31,58 @@
     <p>Y desde ese día no hemos dejado de hablar.</p>
   </section>
 
-  <!-- 2. LAS FLORES AMARILLAS -->
-  <section class="pantalla">
-    <h2>Las flores amarillas</h2>
-    <figure>
-      <div class="marco"><img src="img/FLORES.jpeg" alt="Flores amarillas" onerror="this.style.display='none'"></div>
-      <figcaption>El 21 de septiembre llegó un repartidor con flores amarillas, chocolates y una nota. Fue una sorpresa tuya y lloré de felicidad.</figcaption>
-    </figure>
-  </section>
-
-  <!-- 3. LOS DIBUJOS DE HENRY -->
+  <!-- 2. LOS DIBUJOS DE HENRY -->
   <section class="pantalla">
     <h2>Tus dibujos</h2>
     <p>Un planeta hecho por ti.</p>
     <figure>
-      <div class="marco"><img src="img/dibujo1.jpg" alt="Dibujo 1" onerror="this.style.display='none'"></div>
-      <figcaption>CAMBIA ESTE TEXTO: descripción del dibujo.</figcaption>
+      <div class="marco"><img data-foto="DIBUJO 1" alt="Dibujo de Henry"></div>
+      <figcaption>Hecho por ti, Henry.</figcaption>
     </figure>
     <figure>
-      <div class="marco"><img src="img/dibujo2.jpg" alt="Dibujo 2" onerror="this.style.display='none'"></div>
-      <figcaption>CAMBIA ESTE TEXTO: descripción del dibujo.</figcaption>
+      <div class="marco"><img data-foto="DIBUJO 2" alt="Dibujo de Henry"></div>
+      <figcaption>Hecho por ti, Henry.</figcaption>
     </figure>
   </section>
 
-  <!-- 4. LAS ESTRELLAS (RECUERDOS) -->
+  <!-- 3. EL CARRETE DE HENRY (para cambiar el orden, mueve las líneas) -->
   <section class="pantalla">
-    <h2>Nuestras estrellas</h2>
-    <p>Cada foto guarda un recuerdo.</p>
+    <h2>Mi persona favorita</h2>
+    <p>Desliza para ver todas las fotos.</p>
+    <div class="carrete">
+      <img data-foto="H1" alt="Henry" loading="lazy">
+      <img data-foto="H2" alt="Henry" loading="lazy">
+      <img data-foto="H3" alt="Henry" loading="lazy">
+      <img data-foto="H5" alt="Henry" loading="lazy">
+      <img data-foto="H7" alt="Henry" loading="lazy">
+      <img data-foto="H8" alt="Henry" loading="lazy">
+      <img data-foto="H9" alt="Henry" loading="lazy">
+      <img data-foto="H10" alt="Henry" loading="lazy">
+      <img data-foto="H12" alt="Henry" loading="lazy">
+      <img data-foto="H13" alt="Henry" loading="lazy">
+      <img data-foto="H14" alt="Henry" loading="lazy">
+      <img data-foto="IMG_9952" alt="Henry" loading="lazy">
+      <img data-foto="IMG_9953" alt="Henry" loading="lazy">
+      <img data-foto="IMG_9965" alt="Henry" loading="lazy">
+      <img data-foto="IMG_9966" alt="Henry" loading="lazy">
+    </div>
+  </section>
+
+  <!-- 4. LAS FLORES AMARILLAS -->
+  <section class="pantalla">
+    <h2>El día de las flores amarillas</h2>
+    <p>El 21 de septiembre llegó un repartidor y yo no sabía nada. Eran flores amarillas, unos chocolates y una nota tuya. Lloré de felicidad. Fue el mejor regalo que me has dado, Henry.</p>
     <figure>
-      <div class="marco"><img src="img/recuerdo1.jpg" alt="Recuerdo 1" onerror="this.style.display='none'"></div>
-      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
+      <div class="marco"><img data-foto="FLORES" alt="Las flores amarillas"></div>
+      <figcaption>Las flores que me mandaste.</figcaption>
     </figure>
     <figure>
-      <div class="marco"><img src="img/recuerdo2.jpg" alt="Recuerdo 2" onerror="this.style.display='none'"></div>
-      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
+      <div class="marco"><img data-foto="YO FELIZ" alt="Yo con las flores"></div>
+      <figcaption>Así de feliz me hiciste.</figcaption>
     </figure>
     <figure>
-      <div class="marco"><img src="img/recuerdo3.jpg" alt="Recuerdo 3" onerror="this.style.display='none'"></div>
-      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
-    </figure>
-    <figure>
-      <div class="marco"><img src="img/recuerdo4.jpg" alt="Recuerdo 4" onerror="this.style.display='none'"></div>
-      <figcaption>CAMBIA ESTE TEXTO: qué pasó aquí.</figcaption>
+      <div class="marco"><img data-foto="MENSAJE" alt="La nota que venía con las flores"></div>
+      <figcaption>Tu nota.</figcaption>
     </figure>
   </section>
 
@@ -82,7 +92,7 @@
     <button id="sobre" class="sobre" aria-expanded="false">💌 Toca para abrir</button>
     <div id="carta" class="carta" hidden>
       <p>Henry:</p>
-      <p>ESCRIBE AQUÍ TU CARTA. Cada salto de línea o párrafo nuevo va dentro de su propio &lt;p&gt;.</p>
+      <p>ESCRIBE AQUÍ TU CARTA. Cada párrafo nuevo va dentro de su propio &lt;p&gt;.</p>
       <p>Con cariño,<br>TU NOMBRE</p>
     </div>
   </section>
