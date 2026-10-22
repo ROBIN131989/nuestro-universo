@@ -1,63 +1,108 @@
-// Cielo de estrellas parpadeantes
+// ===== Cielo según la página en la que vas =====
+const capas = ["dia", "tarde", "atardecer", "noche"];
+capas.forEach((n) => {
+  const d = document.createElement("div");
+  d.className = "cielo";
+  d.id = "c-" + n;
+  document.body.prepend(d);
+});
+document.body.dataset.cielo = "dia";
+
+// El cielo de cada página (en orden): dedicatoria, I, II, III, IV, V, VI, VII, VIII, frases, IX, final
+const cielos = ["dia", "dia", "dia", "tarde", "tarde", "atardecer", "atardecer", "atardecer", "noche", "noche", "noche", "noche"];
+const paginas = [...document.querySelectorAll("main .pantalla")];
+paginas.forEach((p, i) => (p.dataset.cielo = cielos[i] || "noche"));
+document.getElementById("portada").dataset.cielo = "dia";
+
+const observador = new IntersectionObserver(
+  (entradas) => {
+    entradas.forEach((e) => {
+      if (e.isIntersecting) document.body.dataset.cielo = e.target.dataset.cielo;
+    });
+  },
+  { rootMargin: "-45% 0px -45% 0px" }
+);
+[document.getElementById("portada"), ...paginas].forEach((p) => observador.observe(p));
+
+// ===== Estrellas (solo se ven cuando llega la noche) =====
 const lienzo = document.getElementById("estrellas");
 const ctx = lienzo.getContext("2d");
 let estrellas = [];
-
 function ajustar() {
   lienzo.width = innerWidth;
   lienzo.height = innerHeight;
-  estrellas = Array.from({ length: 130 }, () => ({
+  estrellas = Array.from({ length: 110 }, () => ({
     x: Math.random() * lienzo.width,
     y: Math.random() * lienzo.height,
-    r: Math.random() * 1.5 + 0.3,
+    r: Math.random() * 1.4 + 0.4,
     f: Math.random() * 6,
   }));
 }
-
 function dibujar(t) {
   ctx.clearRect(0, 0, lienzo.width, lienzo.height);
-  ctx.fillStyle = "#fff";
+  ctx.fillStyle = "#fff6dc";
   estrellas.forEach((s) => {
-    ctx.globalAlpha = 0.35 + 0.65 * Math.abs(Math.sin(t / 900 + s.f));
+    ctx.globalAlpha = 0.3 + 0.7 * Math.abs(Math.sin(t / 1000 + s.f));
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, 7);
     ctx.fill();
   });
   requestAnimationFrame(dibujar);
 }
-
 ajustar();
 addEventListener("resize", ajustar);
 requestAnimationFrame(dibujar);
 
-// Entrar al universo (aquí también arranca la música)
+// ===== Entrar al libro (aquí también arranca la música) =====
 const musica = document.getElementById("musica");
 const btnMusica = document.getElementById("btn-musica");
+const chip = document.getElementById("chip");
 
 document.getElementById("entrar").addEventListener("click", () => {
-  const contenido = document.getElementById("contenido");
-  contenido.hidden = false;
-  contenido.firstElementChild.scrollIntoView({ behavior: "smooth" });
+  document.getElementById("contenido").hidden = false;
+  document.getElementById("inicio").scrollIntoView({ behavior: "smooth" });
   btnMusica.hidden = false;
-  musica.play().catch(() => {}); // si no hay canción, no pasa nada
+  chip.hidden = false;
+  actualizarChip();
+  musica.play().catch(() => {});
 });
-
 btnMusica.addEventListener("click", () => {
   musica.paused ? musica.play().catch(() => {}) : musica.pause();
 });
 
-// Abrir la carta
-const sobre = document.getElementById("sobre");
-const carta = document.getElementById("carta");
+// ===== Nota flotante (mensajes cortos) =====
+const nota = document.getElementById("nota");
+let temporizador;
+function mostrarNota(texto, ms = 5000) {
+  nota.textContent = texto;
+  nota.hidden = false;
+  clearTimeout(temporizador);
+  temporizador = setTimeout(() => (nota.hidden = true), ms);
+}
 
-sobre.addEventListener("click", () => {
-  carta.hidden = !carta.hidden;
-  sobre.setAttribute("aria-expanded", String(!carta.hidden));
-  sobre.textContent = carta.hidden ? "💌 Toca para abrir" : "Cerrar carta";
-  if (!carta.hidden) carta.scrollIntoView({ behavior: "smooth", block: "center" });
+// ===== Pozos escondidos (puedes cambiar estos mensajes) =====
+const MENSAJES_POZOS = [
+  "Dicen que lo que embellece al desierto es el pozo escondido. Tú eres el mío.",
+  "Hay días difíciles, pero pensar en ti los hace más fáciles.",
+  "Si pudiera elegir un lugar para despertar, sería a tu lado.",
+  "Gracias por cada mensaje, cada llamada, cada día. Contigo todo pesa menos.",
+  "Los encontraste todos. Eso quiere decir que me conoces bien. Te amo, Henry.",
+];
+let hallados = 0;
+function actualizarChip() {
+  chip.textContent = "Pozos encontrados: " + hallados + " / " + MENSAJES_POZOS.length;
+}
+document.querySelectorAll(".pozo").forEach((b) => {
+  b.addEventListener("click", () => {
+    if (b.classList.contains("hallado")) return;
+    b.classList.add("hallado");
+    mostrarNota(MENSAJES_POZOS[Number(b.dataset.n)], 6500);
+    hallados++;
+    actualizarChip();
+  });
 });
 
-// Fotos: están en la carpeta IMG y todas son .jpeg
+// ===== Fotos: están en la carpeta IMG y casi todas son .jpeg =====
 const EXTENSIONES = ["jpeg", "JPEG", "jpg", "JPG", "png", "PNG", "webp"];
 document.querySelectorAll("img[data-foto]").forEach((img) => {
   let i = 0;
@@ -73,18 +118,86 @@ document.querySelectorAll("img[data-foto]").forEach((img) => {
   img.addEventListener("error", probar);
   probar();
 });
-// La rosa: cada vez que la tocas aparece una frase distinta
-const frasesRosa = [
-  "“Lo esencial es invisible a los ojos.” — El Principito",
-  "“Es el tiempo que pasaste con tu rosa lo que la hace tan importante.” — El Principito",
-  "“Eres responsable para siempre de lo que has domesticado.” — El Principito",
-  "“Cuando mires el cielo de noche, será como si todas las estrellas rieran.” — El Principito",
-  "Entre millones de estrellas, yo te elijo a ti.",
+
+// ===== Nuestro planeta: rosa, volcán y silla =====
+const frasesPlaneta = {
+  rosa: [
+    "“Lo esencial es invisible a los ojos.” — El Principito",
+    "“Es el tiempo que pasaste con tu rosa lo que la hace tan importante.” — El Principito",
+    "“Eres responsable para siempre de lo que has domesticado.” — El Principito",
+    "“Cuando mires el cielo de noche, será como si todas las estrellas rieran.” — El Principito",
+    "Entre millones de estrellas, yo te elijo a ti.",
+  ],
+  volcan: ["Mi volcán se enciende cada vez que pienso en ti.", "Hay un volcán dormido en mi planeta, y otro en mi corazón cuando me escribes."],
+  silla: ["Aquí me siento a ver atardeceres y a pensar en ti.", "Cada atardecer en esta silla es uno menos para vernos."],
+};
+const contador = { rosa: 0, volcan: 0, silla: 0 };
+const textoPlaneta = document.getElementById("frase-planeta");
+function tocarZona(z) {
+  const lista = frasesPlaneta[z];
+  textoPlaneta.textContent = lista[contador[z] % lista.length];
+  contador[z]++;
+}
+document.querySelectorAll(".zona").forEach((z) => {
+  z.addEventListener("click", () => tocarZona(z.dataset.zona));
+  z.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      tocarZona(z.dataset.zona);
+    }
+  });
+});
+
+// ===== El zorro: conversación paso a paso =====
+const lineasZorro = [
+  ["—¿Qué quiere decir domesticar?", "mano"],
+  ["—Crear lazos.", "mano"],
+  ["“Si me domesticas, serás para mí único en el mundo.”", "frase"],
+  ["Y tú, Henry, ya lo eres.", "mano grande"],
+  ["Cerca o lejos, solo tú tienes mi corazón, mis pensamientos y mi amor.", "frase"],
 ];
-let numeroFrase = 0;
-const rosa = document.getElementById("rosa");
-const textoRosa = document.getElementById("frase-rosa");
-rosa.addEventListener("click", () => {
-  textoRosa.textContent = frasesRosa[numeroFrase % frasesRosa.length];
-  numeroFrase++;
+const dialogo = document.getElementById("dialogo");
+const seguir = document.getElementById("seguir");
+let paso = 0;
+function siguienteLinea() {
+  const [texto, clase] = lineasZorro[paso];
+  const p = document.createElement("p");
+  p.className = clase;
+  p.textContent = texto;
+  dialogo.appendChild(p);
+  paso++;
+  if (paso >= lineasZorro.length) seguir.hidden = true;
+}
+seguir.addEventListener("click", siguienteLinea);
+siguienteLinea();
+
+// ===== 44 atardeceres: mueve la silla =====
+const panel = document.getElementById("panel44");
+const sol = document.getElementById("sol");
+const cuenta = document.getElementById("cuenta");
+const sillaBtn = document.getElementById("silla");
+let atardeceres = 0;
+sillaBtn.addEventListener("click", () => {
+  if (atardeceres >= 44) return;
+  atardeceres++;
+  const avance = atardeceres / 44;
+  sol.style.top = 8 + avance * 62 + "%";
+  panel.classList.toggle("tarde", avance > 0.35 && avance <= 0.8);
+  panel.classList.toggle("noche", avance > 0.8);
+  cuenta.textContent = atardeceres + " / 44";
+  if (atardeceres === 44) {
+    document.getElementById("mensaje44").hidden = false;
+    sillaBtn.disabled = true;
+  }
+});
+
+// ===== La carta =====
+const sobre = document.getElementById("sobre");
+const carta = document.getElementById("carta");
+sobre.addEventListener("click", () => {
+  const abrir = carta.hidden;
+  carta.hidden = !abrir;
+  sobre.classList.toggle("abierto", abrir);
+  document.getElementById("pista-sobre").hidden = abrir;
+  if (abrir) carta.scrollIntoView({ behavior: "smooth", block: "center" });
 });
