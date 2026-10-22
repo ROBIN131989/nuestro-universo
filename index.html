@@ -6,35 +6,70 @@
 <title>Nuestro pequeño universo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- Dibujos reutilizables: el planeta y el filtro de "trazo a mano" -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="mano"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3"/></filter>
+    <linearGradient id="tierra" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="190"><stop offset="0" stop-color="#e8c27a"/><stop offset="1" stop-color="#c98f45"/></linearGradient>
+    <symbol id="planeta" viewBox="0 0 300 190">
+      <g filter="url(#mano)">
+        <circle cx="150" cy="250" r="150" fill="url(#tierra)"/>
+        <path d="M76 122 L97 82 L108 82 L128 108 Z" fill="#8a5a3a"/>
+        <circle cx="102" cy="72" r="5" fill="#cdbba0" opacity=".8"/><circle cx="109" cy="62" r="4" fill="#cdbba0" opacity=".6"/>
+        <path d="M170 104 Q173 84 170 66" stroke="#4f7a45" stroke-width="3" fill="none"/>
+        <ellipse cx="163" cy="88" rx="7" ry="3" fill="#4f7a45" transform="rotate(-25 163 88)"/>
+        <circle cx="170" cy="59" r="9" fill="#c2404f"/><circle cx="170" cy="59" r="4" fill="#9d2f3d"/>
+        <path d="M147 104 C145 38 195 38 193 106" fill="rgba(255,255,255,.18)" stroke="rgba(60,47,38,.4)" stroke-width="1.5"/>
+        <path d="M212 98 v22 M212 112 h16 M228 112 v8" stroke="#6b4a2f" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
 <canvas id="estrellas"></canvas>
 <audio id="musica" src="musica/PEDACITO%20DE%20MI%20CORAZON.mp3" loop></audio>
 <button id="btn-musica" aria-label="Activar o pausar música" hidden>♪</button>
+<div id="chip" hidden></div>
+<div id="nota" role="status" hidden></div>
 
-<!-- PORTADA -->
+<!-- TAPA DEL LIBRO -->
 <section class="pantalla" id="portada">
-  <div class="planeta" aria-hidden="true"><span>🌹</span></div>
-  <p class="frase">“Todas las personas mayores fueron niños alguna vez...”</p>
-  <p class="frase tarde">Pero esta historia es solamente nuestra.</p>
-  <button id="entrar" class="boton">✨ Entrar a nuestro universo</button>
-  <p class="pista">Sube el volumen 🔊 y toca el botón para empezar.</p>
+  <div class="tapa">
+    <p class="mano">Un cuento para Henry</p>
+    <h1>Nuestro pequeño universo</h1>
+    <svg viewBox="0 0 300 190" role="img" aria-label="Un pequeño planeta con una rosa y un volcán"><use href="#planeta"/></svg>
+    <button id="entrar" class="boton">Abrir el libro</button>
+    <p class="pista">Sube el volumen 🔊 y toca el botón.<br>Escondí 5 pozos en estas páginas: ¿los encuentras?</p>
+  </div>
 </section>
 
 <main id="contenido" hidden>
 
-  <!-- 1. EL COMIENZO -->
+  <!-- DEDICATORIA -->
+  <section class="pantalla" id="inicio">
+    <p class="mano grande">A Henry,<br>cuando era niño...<br>y ahora mi persona favorita.</p>
+    <p class="frase">“Todas las personas mayores fueron niños alguna vez...”</p>
+    <p>Pero esta historia es solamente nuestra.</p>
+  </section>
+
+  <!-- CAPÍTULO I -->
   <section class="pantalla">
+    <button class="pozo" data-n="0" style="right:8%;bottom:16%" aria-label="Un pozo escondido">♡</button>
+    <p class="cap">Capítulo I</p>
     <h2>Henry Jesús, alias amor de mi vida, todo empezó un 20 de julio</h2>
     <p class="hora"><b>7:44 p. m.</b> te escribí.</p>
     <p class="hora"><b>10:42 p. m.</b> me respondiste.</p>
     <p>Y desde ese día no hemos dejado de hablar.</p>
   </section>
 
-  <!-- 2. LOS DIBUJOS DE HENRY -->
+  <!-- CAPÍTULO II -->
   <section class="pantalla">
+    <p class="cap">Capítulo II</p>
     <h2>Tus dibujos</h2>
     <p>Recuerdo ese día domingo viéndote dibujar y ver los resultados. Fue increíble ver lo talentoso que eres: tus dibujos son increíbles, eres maravilloso, amor. Ese día me encantó estar contigo, verte dibujar.</p>
     <figure>
@@ -47,8 +82,10 @@
     </figure>
   </section>
 
-  <!-- 3. EL CARRETE DE HENRY (para cambiar el orden, mueve las líneas) -->
+  <!-- CAPÍTULO III -->
   <section class="pantalla">
+    <button class="pozo" data-n="1" style="left:6%;top:12%" aria-label="Un pozo escondido">♡</button>
+    <p class="cap">Capítulo III</p>
     <h2>Acá unas fotos de MI PERSONA FAVORITA</h2>
     <p>Desliza hacia los lados ↔ para ver todas las fotos.</p>
     <div class="carrete">
@@ -70,8 +107,9 @@
     </div>
   </section>
 
-  <!-- 4. LAS FLORES AMARILLAS -->
+  <!-- CAPÍTULO IV -->
   <section class="pantalla">
+    <p class="cap">Capítulo IV</p>
     <h2>El día de las flores amarillas</h2>
     <p>El 21 de septiembre llegó un repartidor y yo no sabía nada. Eran flores amarillas, unos chocolates y una nota tuya. Lloré de felicidad. Fue el mejor regalo que me has dado, Henry.</p>
     <figure>
@@ -88,35 +126,49 @@
     </figure>
   </section>
 
-  <!-- 5. LA ROSA (toca para ver frases) -->
+  <!-- CAPÍTULO V: EL PLANETA -->
   <section class="pantalla">
+    <button class="pozo" data-n="2" style="right:7%;top:14%" aria-label="Un pozo escondido">♡</button>
+    <p class="cap">Capítulo V</p>
     <h2>Nuestro pequeño planeta</h2>
-    <p>Toca la rosa  varias veces: cada vez dice algo distinto.</p>
-    <button id="rosa" class="rosa" aria-label="Tocar la rosa">🌹</button>
-    <p id="frase-rosa" class="frase" aria-live="polite"></p>
+    <p>Toca la rosa, el volcán o la silla.</p>
+    <svg class="planeta" viewBox="0 0 300 190" role="group" aria-label="Nuestro planeta">
+      <use href="#planeta"/>
+      <rect class="zona" data-zona="rosa" x="146" y="34" width="52" height="72" tabindex="0" role="button" aria-label="Tocar la rosa"/>
+      <rect class="zona" data-zona="volcan" x="72" y="52" width="60" height="62" tabindex="0" role="button" aria-label="Tocar el volcán"/>
+      <rect class="zona" data-zona="silla" x="212" y="84" width="40" height="34" tabindex="0" role="button" aria-label="Tocar la silla"/>
+    </svg>
+    <p id="frase-planeta" class="frase" aria-live="polite"></p>
   </section>
 
-  <!-- 6. EL ZORRO -->
+  <!-- CAPÍTULO VI: EL ZORRO -->
   <section class="pantalla">
+    <p class="cap">Capítulo VI</p>
     <h2>El zorro tenía razón</h2>
-    <p class="frase">“Si me domesticas, serás para mí único en el mundo.”</p>
-    <p class="autor">El Principito</p>
-    <p>Y tú lo eres, Henry.</p>
-    <p class="frase">Cerca o lejos, solo tú tienes mi corazón, mis pensamientos y mi amor.</p>
+    <div id="dialogo" class="dialogo" aria-live="polite"></div>
+    <button id="seguir" class="boton">Continuar</button>
   </section>
 
-  <!-- 7. LOS 44 ATARDECERES -->
-  <section class="pantalla">
+  <!-- CAPÍTULO VII: LOS ATARDECERES -->
+  <section class="pantalla" id="atardeceres">
+    <button class="pozo" data-n="3" style="left:7%;bottom:12%" aria-label="Un pozo escondido">♡</button>
+    <p class="cap">Capítulo VII</p>
     <h2>Cuarenta y cuatro atardeceres</h2>
     <p class="frase">“Cuando uno está muy triste, le gustan las puestas de sol.”</p>
     <p class="autor">El Principito</p>
-    <p>Sé que a veces la distancia pesa, y que los problemas nos llegan todos los días. Pero somos fuertes. Lo que sentimos es más grande que cualquier problema, y algún día vamos a estar juntos para enfrentarlos de la mano y superarlos. Mientras tanto, cada atardecer es uno menos para vernos. 🌅</p>
+    <div class="panel" id="panel44"><div class="sol" id="sol"></div><div class="duna"></div></div>
+    <button id="silla" class="boton">🪑 Mover la silla</button>
+    <p id="cuenta" class="mano">0 / 44</p>
+    <p>Sé que a veces la distancia pesa, y que los problemas nos llegan todos los días. Pero somos fuertes. Lo que sentimos es más grande que cualquier problema, y algún día vamos a estar juntos para enfrentarlos de la mano y superarlos. Mientras tanto, cada atardecer es uno menos para vernos.</p>
+    <p id="mensaje44" class="mano" hidden>Y yo seguiré moviendo la silla hasta el día que estemos juntos.</p>
   </section>
 
-  <!-- 8. LA CARTA -->
+  <!-- CAPÍTULO VIII: LA CARTA -->
   <section class="pantalla">
+    <p class="cap">Capítulo VIII</p>
     <h2>Una carta desde mi planeta</h2>
-    <button id="sobre" class="sobre" aria-expanded="false">💌 Toca para abrir</button>
+    <button id="sobre" class="sobre" aria-label="Abrir la carta"></button>
+    <p id="pista-sobre" class="pista">Toca el sello para abrirla.</p>
     <div id="carta" class="carta" hidden>
       <p>Henry, mi amor:</p>
       <p>Cada día que pasa te amo cada vez más. Mi amor por ti es infinito, me encantas, y si hay forma de decírtelo a diario, lo haré todos los días para demostrártelo y recordarte lo mucho que te amo y te quiero, no solo por un rato, sino para toda mi vida.</p>
@@ -124,20 +176,28 @@
     </div>
   </section>
 
-  <!-- 9. FRASES PARA TI -->
+  <!-- FRASES PARA TI -->
   <section class="pantalla">
     <p class="frase">Eres la forma más bonita que ha tenido la vida de enseñarme que vale la pena arriesgarme a amar.</p>
     <p class="frase">“Te quiero así como eres, con todo lo bueno que no ves, con todo lo malo que dices tener.”</p>
     <p class="autor">Mario Benedetti</p>
   </section>
 
-  <!-- 10. FINAL -->
+  <!-- CAPÍTULO IX: EL CORDERO -->
   <section class="pantalla">
+    <p class="cap">Capítulo IX</p>
+    <h2>“Por favor... dibújame un cordero”</h2>
+    <p>Henry, me encanta cómo dibujas. Si algún día quieres, dibújame algo y mándamelo. Lo guardaré junto a las flores amarillas.</p>
+  </section>
+
+  <!-- FINAL (de noche) -->
+  <section class="pantalla">
+    <button class="pozo" data-n="4" style="right:9%;top:16%" aria-label="Un pozo escondido">♡</button>
     <p class="frase">Quizás existan millones de planetas...</p>
     <p class="frase">millones de estrellas...</p>
     <p class="frase">y millones de historias...</p>
     <h2 class="final">Pero yo elegiría la nuestra una y otra vez.</h2>
-    <p>Te amo, Henry. ❤️</p>
+    <p class="mano grande">Te amo, Henry. ❤️</p>
   </section>
 
 </main>
