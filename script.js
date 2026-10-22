@@ -1,11 +1,7 @@
-// ===== Cielo según la página en la que vas =====
-const capas = ["dia", "tarde", "atardecer", "noche"];
-capas.forEach((n) => {
-  const d = document.createElement("div");
-  d.className = "cielo";
-  d.id = "c-" + n;
-  document.body.prepend(d);
-});
+// ===== Cielo: una sola capa que cambia según la página en la que vas =====
+const cielo = document.createElement("div");
+cielo.className = "cielo";
+document.body.prepend(cielo);
 document.body.dataset.cielo = "dia";
 
 // El cielo de cada página (en orden): dedicatoria, I, II, III, IV, V, VI, VII, VIII, frases, IX, final
@@ -17,21 +13,27 @@ document.getElementById("portada").dataset.cielo = "dia";
 const observador = new IntersectionObserver(
   (entradas) => {
     entradas.forEach((e) => {
-      if (e.isIntersecting) document.body.dataset.cielo = e.target.dataset.cielo;
+      if (e.isIntersecting && document.body.dataset.cielo !== e.target.dataset.cielo) {
+        document.body.dataset.cielo = e.target.dataset.cielo;
+      }
     });
   },
   { rootMargin: "-45% 0px -45% 0px" }
 );
 [document.getElementById("portada"), ...paginas].forEach((p) => observador.observe(p));
 
-// ===== Estrellas (solo se ven cuando llega la noche) =====
+// ===== Estrellas (solo se dibujan cuando llega la noche) =====
 const lienzo = document.getElementById("estrellas");
 const ctx = lienzo.getContext("2d");
 let estrellas = [];
+let anchoPrevio = 0;
+let ultimaNoche = 0;
+
 function ajustar() {
+  anchoPrevio = innerWidth;
   lienzo.width = innerWidth;
   lienzo.height = innerHeight;
-  estrellas = Array.from({ length: 110 }, () => ({
+  estrellas = Array.from({ length: 70 }, () => ({
     x: Math.random() * lienzo.width,
     y: Math.random() * lienzo.height,
     r: Math.random() * 1.4 + 0.4,
@@ -39,6 +41,9 @@ function ajustar() {
   }));
 }
 function dibujar(t) {
+  requestAnimationFrame(dibujar);
+  if (document.body.dataset.cielo === "noche") ultimaNoche = t;
+  if (document.hidden || t - ultimaNoche > 1800) return; // fuera de la noche no gasta batería ni se traba
   ctx.clearRect(0, 0, lienzo.width, lienzo.height);
   ctx.fillStyle = "#fff6dc";
   estrellas.forEach((s) => {
@@ -47,28 +52,79 @@ function dibujar(t) {
     ctx.arc(s.x, s.y, s.r, 0, 7);
     ctx.fill();
   });
-  requestAnimationFrame(dibujar);
 }
 ajustar();
-addEventListener("resize", ajustar);
+// En el celular la barra del navegador sube y baja al deslizar: solo reacciona si cambia el ANCHO
+addEventListener("resize", () => {
+  if (innerWidth !== anchoPrevio) ajustar();
+});
 requestAnimationFrame(dibujar);
+
+// ===== Fotos: están en la carpeta IMG y casi todas son .jpeg =====
+const EXTENSIONES = ["jpeg", "JPEG", "jpg", "JPG", "png", "PNG", "webp"];
+function cargarFoto(img) {
+  return new Promise((resolve) => {
+    let i = 0;
+    img.decoding = "async";
+    img.addEventListener("load", () => resolve(), { once: true });
+    const probar = () => {
+      if (i >= EXTENSIONES.length) {
+        const aviso = document.createElement("small");
+        aviso.textContent = "No encontré la foto: IMG/" + img.dataset.foto;
+        img.replaceWith(aviso);
+        resolve();
+        return;
+      }
+      img.src = "IMG/" + encodeURIComponent(img.dataset.foto) + "." + EXTENSIONES[i++];
+    };
+    img.addEventListener("error", probar);
+    probar();
+  });
+}
+
+// El libro se abre cuando las fotos ya cargaron, para que no se mueva nada mientras deslizas
+const botonEntrar = document.getElementById("entrar");
+const fotos = [...document.querySelectorAll("img[data-foto]")];
+let hechas = 0;
+let abierto = false;
+botonEntrar.disabled = true;
+botonEntrar.textContent = "Preparando el libro… 0/" + fotos.length;
+function libroListo() {
+  if (abierto) return;
+  abierto = true;
+  botonEntrar.disabled = false;
+  botonEntrar.textContent = "Abrir el libro";
+}
+Promise.all(
+  fotos.map((f) =>
+    cargarFoto(f).then(() => {
+      hechas++;
+      if (!abierto) botonEntrar.textContent = "Preparando el libro… " + hechas + "/" + fotos.length;
+    })
+  )
+).then(libroListo);
+setTimeout(libroListo, 12000); // si el internet va lento, igual se puede abrir
 
 // ===== Entrar al libro (aquí también arranca la música) =====
 const musica = document.getElementById("musica");
 const btnMusica = document.getElementById("btn-musica");
 const chip = document.getElementById("chip");
 
-document.getElementById("entrar").addEventListener("click", () => {
+botonEntrar.addEventListener("click", () => {
   document.getElementById("contenido").hidden = false;
-  document.getElementById("inicio").scrollIntoView({ behavior: "smooth" });
   btnMusica.hidden = false;
   chip.hidden = false;
   actualizarChip();
   musica.play().catch(() => {});
+  requestAnimationFrame(() => {
+    document.getElementById("inicio").scrollIntoView({ behavior: "auto" });
+  });
 });
 btnMusica.addEventListener("click", () => {
   musica.paused ? musica.play().catch(() => {}) : musica.pause();
 });
+musica.addEventListener("play", () => btnMusica.classList.remove("silencio"));
+musica.addEventListener("pause", () => btnMusica.classList.add("silencio"));
 
 // ===== Nota flotante (mensajes cortos) =====
 const nota = document.getElementById("nota");
@@ -88,9 +144,10 @@ const MENSAJES_POZOS = [
   "Gracias por cada mensaje, cada llamada, cada día. Contigo todo pesa menos.",
   "Los encontraste todos. Eso quiere decir que me conoces bien. Te amo, Henry.",
 ];
+const CORAZON = '<svg class="corazon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9.1C1.1 8.6 3 5 6.4 5c2 0 3.3 1 5.6 3.4C14.3 6 15.6 5 17.6 5 21 5 22.9 8.6 21.3 11.9 19 16.4 12 21 12 21z"/></svg>';
 let hallados = 0;
 function actualizarChip() {
-  chip.textContent = "Pozos encontrados: " + hallados + " / " + MENSAJES_POZOS.length;
+  chip.innerHTML = CORAZON + "Pozos escondidos: " + hallados + " de " + MENSAJES_POZOS.length;
 }
 document.querySelectorAll(".pozo").forEach((b) => {
   b.addEventListener("click", () => {
@@ -100,23 +157,6 @@ document.querySelectorAll(".pozo").forEach((b) => {
     hallados++;
     actualizarChip();
   });
-});
-
-// ===== Fotos: están en la carpeta IMG y casi todas son .jpeg =====
-const EXTENSIONES = ["jpeg", "JPEG", "jpg", "JPG", "png", "PNG", "webp"];
-document.querySelectorAll("img[data-foto]").forEach((img) => {
-  let i = 0;
-  const probar = () => {
-    if (i >= EXTENSIONES.length) {
-      const aviso = document.createElement("small");
-      aviso.textContent = "No encontré la foto: IMG/" + img.dataset.foto;
-      img.replaceWith(aviso);
-      return;
-    }
-    img.src = "IMG/" + encodeURIComponent(img.dataset.foto) + "." + EXTENSIONES[i++];
-  };
-  img.addEventListener("error", probar);
-  probar();
 });
 
 // ===== Nuestro planeta: rosa, volcán y silla =====
